@@ -4,34 +4,43 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Panel extends JPanel implements MouseListener{
+public class Panel extends JPanel implements MouseListener, MouseMotionListener {
     private int x=-1;
     private int y=-1;
 
     public Panel() {
         addMouseListener(this);
+        addMouseMotionListener(this);
     }
     
-    public void mouseExited(MouseEvent e){
+    public void mouseExited(MouseEvent e) {
 //        JOptionPane.showMessageDialog(null, e.getPoint().toString());
     }
 
-    public void mouseEntered(MouseEvent e){
+    public void mouseEntered(MouseEvent e) {
 //        JOptionPane.showMessageDialog(null, e.getPoint().toString());
     }
 
-    public void mousePressed(MouseEvent e){
+    public void mousePressed(MouseEvent e) {
 //        JOptionPane.showMessageDialog(null, e.getPoint().toString());
     }
 
-    public void mouseReleased(MouseEvent e){
+    public void mouseReleased(MouseEvent e) {
 //        JOptionPane.showMessageDialog(null, e.getPoint().toString());
     }
-
-    public void mouseClicked(MouseEvent e) {
+    
+    public void mouseMoved(MouseEvent e) {
          x=e.getX();
          y=e.getY();
          repaint(); 
+         
+    }
+    
+    public void mouseDragged(MouseEvent e) {
+        
+    }
+
+    public void mouseClicked(MouseEvent e) {
         JOptionPane.showMessageDialog(null, e.getPoint().toString());
     }
     
