@@ -2,20 +2,20 @@ package paint;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public class Panel extends JPanel implements MouseListener, MouseMotionListener {
-    private int x=-1;
-    private int y=-1;
-    private int x1=-1;
-    private int y1=-1;
-    private int x2=-1;
-    private int y2=-1;
+    ArrayList<Figura> lista;
+    int x, y, x1, y1;
+    boolean linia = false;
+    Linia temp_linia;
     private Boolean rys = false;
 
     public Panel() {
         addMouseListener(this);
         addMouseMotionListener(this);
+        lista = new ArrayList<Figura>();
     }
     
     public void mouseExited(MouseEvent e) {
@@ -29,11 +29,13 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener 
     public void mousePressed(MouseEvent e) {
         x1=e.getX();
         y1=e.getY();
-        rys = true;
+        linia = true;
     }
 
     public void mouseReleased(MouseEvent e) {
-        rys = false;
+        linia=false;
+        temp_linia = null;
+        repaint();
 
     }
     
@@ -42,23 +44,22 @@ public class Panel extends JPanel implements MouseListener, MouseMotionListener 
     }
     
     public void mouseDragged(MouseEvent e) {
-        x2=e.getX();
-        y2=e.getY();
-        repaint();
-        
+        if (linia == true) {
+            lista.remove(temp_linia);
+            temp_linia = new Linia(x1, y1, e.getX(), e.getY());
+            lista.add(temp_linia);
+        }
         
     }
 
     public void mouseClicked(MouseEvent e) {
-
+        lista.add(new Kolo(e.getX(), e.getY()));
+        repaint();
     }
     
     public void paint(Graphics g) {
-        if (rys) g.clearRect(0, 0, getSize().width, getSize().height);
-        g.setColor(Color.RED);
-        
-        
-        g.drawLine(x1, y1, x2, y2);
+        for (Figura figura: lista)
+            figura.paint(g);
     }
 
 }
